@@ -5,6 +5,10 @@
 
 #include <errno.h>
 #include <stddef.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/unistd.h>
+
 
 #include "CovidSim.h"
 #include "binio.h"
@@ -31,6 +35,8 @@
 #ifndef min
 #define min(a,b) ((a) < (b) ? (a) : (b))
 #endif
+
+extern void paramprinter(FILE *,param *,adminunit []);
 
 void ReadParams(char*, char*);
 void ReadInterventions(char*);
@@ -335,6 +341,20 @@ int main(int argc, char* argv[])
 	//// **** //// **** //// **** //// **** //// **** //// **** //// **** //// **** //// **** //// **** //// **** //// **** //// **** //// ****
 
 	///// initialize model (for all realisations).
+
+	do {
+	struct stat stat0;
+	FILE *pFILE;
+	char AuxFile[1024];
+	sprintf(AuxFile, "%s_P.out", OutFileBase);
+	if (NULL == (pFILE = fopen(AuxFile, "w"))) \
+			ERR_CRITICAL_FMT("Cannot open file %s\n", AuxFile);
+	paramprinter(pFILE, &P, AdUnits);
+	fclose(pFILE);
+	if (0 != stat("/tmp/fullrun", &stat0)) exit(0); /*rmt1947*/
+	} while(0);
+
+
 	SetupModel(DensityFile, NetworkFile, SchoolFile, RegDemogFile);
 
 	for (i = 0; i < MAX_ADUNITS; i++) AdUnits[i].NI = 0;
@@ -433,6 +453,8 @@ int main(int argc, char* argv[])
 	fprintf(stderr, "Model finished\n");
 }
 
+
+extern void paramprinter(FILE *,param *,adminunit []);
 
 void ReadParams(char* ParamFile, char* PreParamFile)
 {

@@ -234,6 +234,10 @@ cmd.extend([
 print("Command line: " + " ".join(cmd))
 process = subprocess.run(cmd, check=True)
 
+sys.exit(0); #rmt1947
+
+
+
 for root in control_roots:
     cf = os.path.join(args.paramdir, "p_{0}.txt".format(root))
     print("Intervention: {0} {1} {2}".format(args.country, root, r))
