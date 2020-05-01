@@ -94,6 +94,14 @@ else:
     shutil.rmtree(build_dir, ignore_errors=True)
     os.makedirs(build_dir, exist_ok=False)
     cwd = os.getcwd()
+    
+    script_path = os.path.dirname(os.path.realpath(__file__))
+    src_dir = os.path.join(script_path, os.pardir, "src")
+    os.chdir(src_dir)
+    subprocess.run(['gcc','-Wall','-c','readfile.c'], check=True)
+    subprocess.run(['gcc','-Wall','-c','showdial.c'], check=True)
+    subprocess.run(['gcc','-Wall','-c','dial.c'], check=True)
+
     os.chdir(build_dir)
 
     # Build
@@ -233,6 +241,10 @@ cmd.extend([
         ])
 print("Command line: " + " ".join(cmd))
 process = subprocess.run(cmd, check=True)
+
+sys.exit(0); #rmt1947
+
+
 
 for root in control_roots:
     cf = os.path.join(args.paramdir, "p_{0}.txt".format(root))

@@ -1,0 +1,38 @@
+# Copyright (c) 2020 Richard Michael Thomas <rmthomas@sciolus.org>
+#
+#  simpler.README
+#
+# This file is a component of project covid-simpler
+#------------------------------------------------------------------------------
+
+This is the
+
+simpler
+
+branch of project covid-simpler.  In comparison with the reference branch,
+there are new files
+
+	src/dial.*
+	src/showdial.*
+	src/readfile.*
+
+many changes, replacing GetInputParameter() everywhere, in file
+
+	src/CovidSim.cpp
+
+a single essential change in
+
+        src/CMakeLists.txt
+
+and minor changes to a few other files necessary to permit compilation.
+
+For guidance on building and running the program, please refer to
+the  README.md  files in subdirectories here and in the master branch;
+on all branches, files named README.md are the unaltered, original files
+as at cloning from upstream commit 145ff493d9d7ccd30a421a923aea0e9686c4745e.
+
+By default, a run will do no more than write a list of input parameters
+into a file with a name like  foo_bar_P.out  in the output directory
+~/NOBACKUP/simpler.  To force a complete run, lines tagged "rmt1947" may
+be manually deleted from files  src/CovidSim.cpp  and  data/run_sample.py.
+
